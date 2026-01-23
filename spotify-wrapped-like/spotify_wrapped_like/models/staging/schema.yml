@@ -1,0 +1,47 @@
+version: 2
+
+models:
+    - name: stg_spotify_tracks
+      description: "Staging model for spotify tracks"
+      columnns:
+          - name: track_id
+            description: "Primary key for this table."
+            data_tests:
+                - unique
+                - not_null
+          - name: track_name
+            description: "Name of the track as displayed in Spotify."
+          - name: track_number
+            description:
+                "Number of the track in the album. Minimum value is 1.
+                If track is the single track_number equals 1"
+            data_tests:
+                - accepted_range:
+                      min_value: 1
+                - dbt_utils.expression_is_true:
+                      expression: "track_number<= album_total_tracks"
+          - name: track_popularity
+            description:
+                "Spotify track popularity score on a scale 0-100, where
+                higher means more popular."
+            data_tests:
+                - accepted_range:
+                      min_value: 0
+                      max_value:
+          - name: explicit
+            description: "Indicates wheter the track contains explicit lyrics or not"
+            data_tests:
+                - dbt_utils.expression_is_true:
+                      expression: "explicit in (true, false)"
+          - name: artist_name
+            description: "Artist name as displayed in spotify"
+            data_tests:
+                - not_null
+          - name: artist_popularity
+            description:
+                "Spotify artist popularity score on a scale 0-100,
+                where higher means more popular"
+            data_tests:
+                - accepted_range:
+                      min_value: 0
+                      max_value: 100
