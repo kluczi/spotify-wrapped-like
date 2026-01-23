@@ -1,5 +1,9 @@
+# Python
 __pycache__/
 *.py[cod]
+*.pyc
+*.pyo
+*.pyd
 *$py.class
 *.so
 .Python
@@ -19,6 +23,7 @@ wheels/
 .installed.cfg
 *.egg
 
+# Virtual Environment
 .venv/
 venv/
 ENV/
@@ -31,7 +36,7 @@ env/
 *.swo
 *~
 
-
+# OS
 .DS_Store
 .DS_Store?
 ._*
@@ -40,5 +45,12 @@ env/
 ehthumbs.db
 Thumbs.db
 
+# Environment variables
 .env
 .env.local
+
+# dbt
+dbt/*/target/
+dbt/*/logs/
+*.log
+dbt/.user.yml
