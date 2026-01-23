@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: pg
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+  dbt:
+    build:
+      context: ./spotify_wrapped_like
+      dockerfile: Dockerfile
+    container_name: dbt
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DBT_TARGET: ${DBT_TARGET}
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      # dbt project
+      - ./spotify_wrapped_like:/usr/app
+      - ./spotify_wrapped_like/profiles.yml:/root/.dbt/profiles.yml:ro
+    working_dir: /usr/app
+    entrypoint: ["bash", "-lc"]
+    command: ["tail -f /dev/null"]
+
+volumes:
+  pg_data:
