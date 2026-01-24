@@ -1,0 +1,43 @@
+version: 2
+
+models:
+    - name: dim_album
+      description: "Spotify album dimension with no duplicates"
+      columnns:
+          - name: album_id
+            data_type: text
+            description:
+                "Unique identifier of the album associated with the track,
+                as provided in the Spotify data."
+            data_tests:
+                - not_null
+          - name: album_name
+            data_type: text
+            description: "Name of the album as displayed in Spotify."
+          - name: album_release_date
+            data_type: date
+            description: "Album release date in YYYY-MM-DD format."
+            data_tests:
+                - not_null
+          - name: album_total_tracks
+            data_type: int
+            description: "Number of total tracks on the album"
+            data_tests:
+                - dbt_utils.expression_is_true:
+                      arguments:
+                          expression: "album_total_tracks>0"
+          - name: album_type
+            data_type: text
+            description:
+                "Type of album release in the Spotify catalog,
+                such as album, single or compilation."
+            data_tests:
+                - not_null
+                - accepted_values:
+                      arguments:
+                          values:
+                              [
+                                  "single",
+                                  "album",
+                                  "compilation"
+                              ]
