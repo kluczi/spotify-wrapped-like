@@ -2,7 +2,7 @@ version: 2
 
 models:
     - name: stg_spotify_tracks
-      description: "Staging model for spotify tracks"
+      description: "Staging model for spotify tracks."
       columnns:
           - name: track_id
             description: "Primary key for this table."
@@ -45,3 +45,48 @@ models:
                 - accepted_range:
                       min_value: 0
                       max_value: 100
+          - name: artist_followers
+            description: "Number of artist followers as displayed in Spotify"
+            data_tests:
+                - dbt_utils.expression_is_true:
+                      expression: "artist_followers>=0"
+          - name: artist_genres
+            description:
+                "Comma seperated list of genres associated with
+                artist as provided in the Spotify metadata. NULL indicates
+                that genre data was not available for the artist"
+          - name: album_id
+            description:
+                "Unique identifier of the album associated with the track,
+                as provided in the Spotify data."
+            data_tests:
+                - not_null
+          - name: album_name
+            description: "Name of the album as displayed in Spotify."
+          - name: album_release_date
+            description: "Album release date in YYYY-MM-DD format."
+            data_tests:
+                - not_null
+          - name: album_total_tracks
+            description: "Number of total tracks on the album"
+            data_tests:
+                - dbt_utils.expression_is_true:
+                      expression: "album_total_tracks>0"
+          - name: album_type
+            description:
+                "Type of album release in the Spotify catalog,
+                such as album, single or compilation."
+            data_tests:
+                - not_null
+                - accepted_values:
+                      values:
+                          [
+                              "single",
+                              "album",
+                              "compilation"
+                          ]
+          - name: track_duration_min
+            description: "Track duration expressed in minutes, including fractional values."
+            data_tests:
+                - dbt_utils.expression_is_true:
+                      expression: "track_duration_min>0"
