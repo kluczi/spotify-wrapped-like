@@ -41,3 +41,7 @@ models:
                                   "album",
                                   "compilation"
                               ]
+          - name: dim_artist
+            description:
+            columnns:
+                - name:
