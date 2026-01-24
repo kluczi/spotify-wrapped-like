@@ -6,7 +6,7 @@ WITH src AS (
         track_popularity,
         track_duration_min
     FROM 
-        ref({{'stg_spotify_tracks'}})
+        {{ref('stg_spotify_tracks')}}
 )
 
 SELECT 

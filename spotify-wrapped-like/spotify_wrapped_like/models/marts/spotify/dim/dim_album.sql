@@ -6,7 +6,7 @@ WITH src AS (
         album_type,
         album_total_tracks
     FROM
-        ref({{'stg_spotify_tracks'}})
+        {{ref('stg_spotify_tracks')}}
 )
 
 SELECT DISTINCT

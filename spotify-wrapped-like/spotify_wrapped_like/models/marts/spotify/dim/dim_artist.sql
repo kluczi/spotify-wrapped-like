@@ -4,11 +4,11 @@ WITH src AS (
         artist_followers,
         artist_popularity
     FROM
-        ref({{'stg_spotify_tracks'}})
+        {{ref('stg_spotify_tracks')}}
 )
 
 SELECT DISTINCT
     artist_name,
     artist_followers,
-    artist_followers
+    artist_popularity
 FROM src
