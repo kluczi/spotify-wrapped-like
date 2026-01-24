@@ -6,38 +6,49 @@ models:
       columnns:
           - name: track_id
             description: "Primary key for this table."
+            data_type: text
             data_tests:
                 - unique
                 - not_null
           - name: track_name
+            data_type: text
             description: "Name of the track as displayed in Spotify."
           - name: track_number
+            data_type: int
             description:
                 "Number of the track in the album. Minimum value is 1.
                 If track is the single track_number equals 1"
             data_tests:
                 - accepted_range:
-                      min_value: 1
+                      arguments:
+                          min_value: 1
                 - dbt_utils.expression_is_true:
-                      expression: "track_number<= album_total_tracks"
+                      arguments:
+                          expression: "track_number<= album_total_tracks"
           - name: track_popularity
+            data_type: int
             description:
                 "Spotify track popularity score on a scale 0-100, where
                 higher means more popular."
             data_tests:
                 - accepted_range:
-                      min_value: 0
-                      max_value:
+                      arguments:
+                          min_value: 0
+                          max_value: 100
           - name: explicit
+            data_type: boolean
             description: "Indicates wheter the track contains explicit lyrics or not"
             data_tests:
                 - dbt_utils.expression_is_true:
-                      expression: "explicit in (true, false)"
+                      arguments:
+                          expression: "explicit in (true, false)"
           - name: artist_name
+            data_type: text
             description: "Artist name as displayed in spotify"
             data_tests:
                 - not_null
           - name: artist_popularity
+            data_type: int
             description:
                 "Spotify artist popularity score on a scale 0-100,
                 where higher means more popular"
@@ -46,47 +57,58 @@ models:
                       min_value: 0
                       max_value: 100
           - name: artist_followers
+            data_type: bigint
             description: "Number of artist followers as displayed in Spotify"
             data_tests:
                 - dbt_utils.expression_is_true:
                       expression: "artist_followers>=0"
           - name: artist_genres
+            data_type: text
             description:
                 "Comma seperated list of genres associated with
                 artist as provided in the Spotify metadata. NULL indicates
                 that genre data was not available for the artist"
           - name: album_id
+            data_type: text
             description:
                 "Unique identifier of the album associated with the track,
                 as provided in the Spotify data."
             data_tests:
                 - not_null
           - name: album_name
+            data_type: text
             description: "Name of the album as displayed in Spotify."
           - name: album_release_date
+            data_type: date
             description: "Album release date in YYYY-MM-DD format."
             data_tests:
                 - not_null
           - name: album_total_tracks
+            data_type: int
             description: "Number of total tracks on the album"
             data_tests:
-                - dbt_utils.expression_is_true:
-                      expression: "album_total_tracks>0"
+                arguments:
+                    - dbt_utils.expression_is_true:
+                          expression: "album_total_tracks>0"
           - name: album_type
+            data_type: text
             description:
                 "Type of album release in the Spotify catalog,
                 such as album, single or compilation."
             data_tests:
                 - not_null
                 - accepted_values:
-                      values:
-                          [
-                              "single",
-                              "album",
-                              "compilation"
-                          ]
+                      arguments:
+                          values:
+                              [
+                                  "single",
+                                  "album",
+                                  "compilation"
+                              ]
           - name: track_duration_min
+            data_type: double precision
             description: "Track duration expressed in minutes, including fractional values."
             data_tests:
                 - dbt_utils.expression_is_true:
-                      expression: "track_duration_min>0"
+                  arguments:
+                      expression: "track_duration_min > 0"
