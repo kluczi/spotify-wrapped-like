@@ -11,6 +11,7 @@ models:
                 as provided in the Spotify data."
             data_tests:
                 - not_null
+                - unique
           - name: album_name
             data_type: text
             description: "Name of the album as displayed in Spotify."
@@ -49,6 +50,7 @@ models:
             description: "Artist name displayed as in Spotify"
             data_tests:
                 - not_null
+                - unique
           - name: artist_followers
             data_type: bigint
             description: "Number of artist followers as displayed in Spotify"
@@ -66,3 +68,48 @@ models:
                       arguments:
                           - min_value: 0
                           - max_value: 100
+    - name: dim_track
+      description: "Spotify track dimension with no duplicates"
+      columns:
+          - name: track_id
+            data_type: text
+            description:
+                "Unique identifier of the track
+                as provided in the Spotify data."
+            data_tests:
+                - not_null
+                - unique
+          - name: track_name
+            data_type: text
+            description: "Name of the track as displayed in Spotify."
+            data_tests:
+                - not_null
+          - name: track_number
+            data_type: int
+            description:
+            data_tests:
+                - accepted_range:
+                      arguments:
+                          min_value: 1
+          - name: track_popularity
+            data_type: int
+            description: ""
+            data_tests:
+                - accepted_range:
+                  arguments:
+                      min_value: 0
+                      max_value: 100
+          - name: track_duration_min
+            data_type: double precision
+            description: ""
+            data_tests:
+                - accepted_range:
+                  arguments:
+                      min_value: 0
+          - name: explicit
+            data_type: boolean
+            description: ""
+            data_tests:
+                - dbt_utils.expression_is_true:
+                      arguments:
+                          expression: "explicit in (true, false)"
