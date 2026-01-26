@@ -44,4 +44,15 @@ models:
           - name: dim_artist
             description:
             columnns:
-                - name:
+                - name: artist_name
+                  data_type: text
+                  description: "Artist name displayed as in Spotify"
+                  data_tests:
+                      - not_null
+                - name: artist_followers
+                  data_type: bigint
+                  description: ""
+                  data_tests:
+                      - accepted_range:
+                            arguments:
+                                - min_value: 0
