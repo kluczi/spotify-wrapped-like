@@ -3,7 +3,7 @@ version: 2
 models:
     - name: dim_album
       description: "Spotify album dimension with no duplicates"
-      columnns:
+      columns:
           - name: album_id
             data_type: text
             description:
@@ -41,28 +41,28 @@ models:
                                   "album",
                                   "compilation"
                               ]
-          - name: dim_artist
+    - name: dim_artist
+      description: "Spotify artist dimension with no duplicates"
+      columns:
+          - name: artist_name
+            data_type: text
+            description: "Artist name displayed as in Spotify"
+            data_tests:
+                - not_null
+          - name: artist_followers
+            data_type: bigint
+            description: "Number of artist followers as displayed in Spotify"
+            data_tests:
+                - accepted_range:
+                      arguments:
+                          - min_value: 0
+          - name: artist_popularity
+            data_type: int
             description:
-            columnns:
-                - name: artist_name
-                  data_type: text
-                  description: "Artist name displayed as in Spotify"
-                  data_tests:
-                      - not_null
-                - name: artist_followers
-                  data_type: bigint
-                  description: "Number of artist followers as displayed in Spotify"
-                  data_tests:
-                      - accepted_range:
-                            arguments:
-                                - min_value: 0
-                - name: artist_popularity
-                  data_type: int
-                  description:
-                      "Spotify artist popularity score on a scale 0-100,
-                      where higher means more popular"
-                  data_tests:
-                      - accepted_range:
-                            arguments:
-                                - min_value: 0
-                                - max_value: 100
+                "Spotify artist popularity score on a scale 0-100,
+                where higher means more popular"
+            data_tests:
+                - accepted_range:
+                      arguments:
+                          - min_value: 0
+                          - max_value: 100
