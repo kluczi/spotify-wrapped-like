@@ -2,7 +2,7 @@ version: 2
 
 models:
     - name: dim_album
-      description: "Spotify album dimension with no duplicates"
+      description: "Album dimension (one row per album) built from staged Spotify track metadata."
       columns:
           - name: album_id
             data_type: text
@@ -17,12 +17,12 @@ models:
             description: "Name of the album as displayed in Spotify."
           - name: album_release_date
             data_type: date
-            description: "Album release date in YYYY-MM-DD format."
+            description: "Album release date."
             data_tests:
                 - not_null
           - name: album_total_tracks
             data_type: int
-            description: "Number of total tracks on the album"
+            description: "Total number of tracks on the album."
             data_tests:
                 - dbt_utils.expression_is_true:
                       arguments:
@@ -43,39 +43,35 @@ models:
                                   "compilation"
                               ]
     - name: dim_artist
-      description: "Spotify artist dimension with no duplicates"
+      description: "Artist dimension (one row per artist) with popularity and follower metrics."
       columns:
           - name: artist_name
             data_type: text
-            description: "Artist name displayed as in Spotify"
+            description: "Artist name as displayed in Spotify."
             data_tests:
                 - not_null
                 - unique
           - name: artist_followers
             data_type: bigint
-            description: "Number of artist followers as displayed in Spotify"
+            description: "Number of followers for the artist, as provided by Spotify."
             data_tests:
                 - accepted_range:
                       arguments:
                           - min_value: 0
           - name: artist_popularity
             data_type: int
-            description:
-                "Spotify artist popularity score on a scale 0-100,
-                where higher means more popular"
+            description: "Spotify artist popularity score on a 0-100 scale (higher is more popular)."
             data_tests:
                 - accepted_range:
                       arguments:
                           - min_value: 0
                           - max_value: 100
     - name: dim_track
-      description: "Spotify track dimension with no duplicates"
+      description: "Track dimension (one row per track) with track-level metadata and audio flags."
       columns:
           - name: track_id
             data_type: text
-            description:
-                "Unique identifier of the track
-                as provided in the Spotify data."
+            description: "Unique Spotify track identifier."
             data_tests:
                 - not_null
                 - unique
@@ -86,30 +82,53 @@ models:
                 - not_null
           - name: track_number
             data_type: int
-            description:
+            description: "Track number within the album (1-indexed)."
             data_tests:
                 - accepted_range:
                       arguments:
                           min_value: 1
           - name: track_popularity
             data_type: int
-            description: ""
+            description: "Spotify track popularity score on a 0-100 scale (higher is more popular)."
             data_tests:
                 - accepted_range:
-                  arguments:
-                      min_value: 0
-                      max_value: 100
+                      arguments:
+                          min_value: 0
+                          max_value: 100
           - name: track_duration_min
             data_type: double precision
-            description: ""
+            description: "Track duration in minutes (may be fractional)."
             data_tests:
                 - accepted_range:
-                  arguments:
-                      min_value: 0
+                      arguments:
+                          min_value: 0
           - name: explicit
             data_type: boolean
-            description: ""
+            description: "Whether the track is marked as explicit in Spotify."
             data_tests:
                 - dbt_utils.expression_is_true:
                       arguments:
                           expression: "explicit in (true, false)"
+    - name: dim_genre
+      description: "Genre dimension (one row per genre) generated from exploded artist genres."
+      columns:
+          - name: genre_sk
+            data_type: text
+            description: "Surrogate key for the genre value."
+            data_tests:
+                - unique
+                - not_null
+          - name: genre
+            data_type: text
+            description: "Single genre value from Spotify metadata (artists can have multiple genres)."
+    - name: dim_artist_genre
+      description: "Artist-genre dimension/relationship table linking artists to individual genre values."
+      columns:
+          - name: artist_name
+            data_type: text
+            description: "Artist name as displayed in Spotify."
+            data_tests:
+                - not_null
+          - name: genre
+            data_type: text
+            description: "Single genre value."
