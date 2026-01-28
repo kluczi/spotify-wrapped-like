@@ -15,8 +15,7 @@ models:
             description: "Track name as displayed in Spotify."
           - name: track_number
             data_type: int
-            description:
-                "Track number within the album (1-indexed)."
+            description: "Track number within the album (1-indexed)."
             data_tests:
                 - accepted_range:
                       arguments:
@@ -26,8 +25,7 @@ models:
                           expression: "track_number <= album_total_tracks"
           - name: track_popularity
             data_type: int
-            description:
-                "Spotify track popularity score on a 0-100 scale (higher is more popular)."
+            description: "Spotify track popularity score on a 0-100 scale (higher is more popular)."
             data_tests:
                 - accepted_range:
                       arguments:
@@ -47,8 +45,7 @@ models:
                 - not_null
           - name: artist_popularity
             data_type: int
-            description:
-                "Spotify artist popularity score on a 0-100 scale (higher is more popular)."
+            description: "Spotify artist popularity score on a 0-100 scale (higher is more popular)."
             data_tests:
                 - accepted_range:
                       arguments:
@@ -63,8 +60,7 @@ models:
                           expression: "artist_followers >= 0"
           - name: artist_genres
             data_type: text
-            description:
-                "Comma-separated list of genres for the artist from Spotify metadata (NULL if unavailable)."
+            description: "Comma-separated list of genres for the artist from Spotify metadata (NULL if unavailable)."
           - name: album_id
             data_type: text
             description:
@@ -89,8 +85,7 @@ models:
                           expression: "album_total_tracks > 0"
           - name: album_type
             data_type: text
-            description:
-                "Album type in the Spotify catalog (album, single, or compilation)."
+            description: "Album type in the Spotify catalog (album, single, or compilation)."
             data_tests:
                 - not_null
                 - accepted_values:
@@ -103,7 +98,7 @@ models:
                               ]
           - name: track_duration_min
             data_type: double precision
-            description: "Track duration in minutes (may be fractional)."
+            description: "Track duration in minutes (fractional)."
             data_tests:
                 - dbt_utils.expression_is_true:
                       arguments:
