@@ -7,7 +7,7 @@ WITH src AS (
 )
 
 SELECT DISTINCT
-    artist_name,
+    trim(artist_name) as artist_name,
     trim(g) AS genre
 FROM src
 CROSS JOIN unnest(string_to_array(artist_genres, ',')) AS g
