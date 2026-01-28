@@ -66,7 +66,7 @@ spotify-wrapped-like/
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone [<repository-url>](https://github.com/kluczi/spotify-wrapped-like)
    cd spotify-wrapped-like-project
    ```
 
