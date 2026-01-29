@@ -1,5 +1,6 @@
 WITH src AS (
     SELECT
+        {{ dbt_utils.generate_surrogate_key(['artist_name']) }} AS artist_genre_sk,
         artist_name,
         artist_genres
     FROM 
