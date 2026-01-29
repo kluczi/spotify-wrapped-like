@@ -96,7 +96,7 @@ models:
                           min_value: 0
                           max_value: 100
           - name: track_duration_min
-            data_type: double precision
+            data_type: float
             description: "Track duration in minutes (may be fractional)."
             data_tests:
                 - accepted_range:
