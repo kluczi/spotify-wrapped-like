@@ -70,7 +70,7 @@ models:
                 - not_null
                 - unique
           - name: artist_followers
-            data_type: bigint
+            data_type: int
             description: "Number of followers for the artist, as provided by Spotify."
             data_tests:
                 - accepted_range:
@@ -163,7 +163,6 @@ models:
             data_tests:
                 - unique
                 - not_null
-
           - name: artist_name
             data_type: text
             description: "Artist name as displayed in Spotify."
