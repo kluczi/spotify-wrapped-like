@@ -1,5 +1,6 @@
 WITH src AS (
     SELECT 
+        {{ dbt_utils.generate_surrogate_key(['track_id']) }} AS track_sk,
         track_id,
         track_name,
         track_number,
@@ -10,7 +11,8 @@ WITH src AS (
         {{ref('stg_spotify_tracks')}}
 )
 
-SELECT 
+SELECT
+    track_sk,
     track_id,
     track_name,
     track_number,
