@@ -1,5 +1,6 @@
 WITH src AS (
     SELECT 
+        {{ dbt_utils.generate_surrogate_key(['album_id']) }} AS album_sk,
         album_id,
         album_name,
         album_release_date,
@@ -10,6 +11,7 @@ WITH src AS (
 )
 
 SELECT DISTINCT
+    album_sk,
     album_id,
     album_name,
     album_release_date,
