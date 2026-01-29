@@ -20,5 +20,5 @@ SELECT
     album_release_date::date AS album_release_date,
     album_total_tracks::int AS album_total_tracks,
     trim(album_type) AS album_type,
-    track_duration_min::double precision AS track_duration_min
+    track_duration_min::float AS track_duration_min
 FROM src
