@@ -97,7 +97,7 @@ models:
                                   "compilation"
                               ]
           - name: track_duration_min
-            data_type: double precision
+            data_type: float
             description: "Track duration in minutes (fractional)."
             data_tests:
                 - dbt_utils.expression_is_true:
