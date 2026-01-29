@@ -10,6 +10,7 @@ WITH src AS (
 )
 
 SELECT DISTINCT 
+    artist_genre_sk,
     trim(artist_name) as artist_name,
     trim(g) AS genre
 FROM 
