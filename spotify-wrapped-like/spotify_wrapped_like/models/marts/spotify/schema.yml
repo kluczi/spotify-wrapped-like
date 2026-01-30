@@ -5,80 +5,102 @@ models:
       config:
           contract:
               enforced: true
-      description: "Album dimension (one row per album) built from staged Spotify track metadata."
+      description:
+          >
+          Album dimension (one row per album) built from staged Spotify track metadata.
       columns:
           - name: album_sk
             data_type: text
-            description: "Surrogate key for album dimension"
+            description:
+                >
+                Surrogate key for album dimension
             data_tests:
                 - unique
                 - not_null
           - name: album_id
             data_type: text
             description:
-                "Unique identifier of the album associated with the track,
-                as provided in the Spotify data."
+                >
+                Unique identifier of the album associated with the track,
+                as provided in the Spotify data.
             data_tests:
                 - not_null
                 - unique
           - name: album_name
             data_type: text
-            description: "Name of the album as displayed in Spotify."
+            description:
+                >
+                Name of the album as displayed in Spotify.
           - name: album_release_date
             data_type: date
-            description: "Album release date."
+            description:
+                >
+                Album release date.
             data_tests:
                 - not_null
           - name: album_total_tracks
             data_type: int
-            description: "Total number of tracks on the album."
+            description:
+                >
+                Total number of tracks on the album.
             data_tests:
                 - dbt_utils.expression_is_true:
                       arguments:
-                          expression: "album_total_tracks>0"
+                          expression: 'album_total_tracks>0'
           - name: album_type
             data_type: text
             description:
-                "Type of album release in the Spotify catalog,
-                such as album, single or compilation."
+                >
+                Type of album release in the Spotify catalog,
+                such as album, single or compilation.
             data_tests:
                 - not_null
                 - accepted_values:
                       arguments:
                           values:
                               [
-                                  "single",
-                                  "album",
-                                  "compilation"
+                                  'single',
+                                  'album',
+                                  'compilation'
                               ]
     - name: dim_artist
       config:
           contract:
               enforced: true
-      description: "Artist dimension (one row per artist) with popularity and follower metrics."
+      description:
+          >
+          Artist dimension (one row per artist) with popularity and follower metrics.
       columns:
           - name: artist_sk
             data_type: text
-            description: "Surrogate key for artist dimension"
+            description:
+                >
+                Surrogate key for artist dimension
             data_tests:
                 - unique
                 - not_null
           - name: artist_name
             data_type: text
-            description: "Artist name as displayed in Spotify."
+            description:
+                >
+                Artist name as displayed in Spotify.
             data_tests:
                 - not_null
                 - unique
           - name: artist_followers
             data_type: int
-            description: "Number of followers for the artist, as provided by Spotify."
+            description:
+                >
+                Number of followers for the artist, as provided by Spotify.
             data_tests:
                 - accepted_range:
                       arguments:
                           - min_value: 0
           - name: artist_popularity
             data_type: int
-            description: "Spotify artist popularity score on a 0-100 scale (higher is more popular)."
+            description:
+                >
+                Spotify artist popularity score on a 0-100 scale (higher is more popular).
             data_tests:
                 - accepted_range:
                       arguments:
@@ -88,35 +110,47 @@ models:
       config:
           contract:
               enforced: true
-      description: "Track dimension (one row per track) with track-level metadata and audio flags."
+      description:
+          >
+          Track dimension (one row per track) with track-level metadata and audio flags.
       columns:
           - name: track_sk
             data_type: text
-            description: "Surrogate key for track dimension"
+            description:
+                >
+                Surrogate key for track dimension
             data_tests:
                 - unique
                 - not_null
           - name: track_id
             data_type: text
-            description: "Unique Spotify track identifier."
+            description:
+                >
+                Unique Spotify track identifier.
             data_tests:
                 - not_null
                 - unique
           - name: track_name
             data_type: text
-            description: "Name of the track as displayed in Spotify."
+            description:
+                >
+                Name of the track as displayed in Spotify.
             data_tests:
                 - not_null
           - name: track_number
             data_type: int
-            description: "Track number within the album (1-indexed)."
+            description:
+                >
+                Track number within the album (1-indexed).
             data_tests:
                 - accepted_range:
                       arguments:
                           min_value: 1
           - name: track_popularity
             data_type: int
-            description: "Spotify track popularity score on a 0-100 scale (higher is more popular)."
+            description:
+                >
+                Spotify track popularity score on a 0-100 scale (higher is more popular).
             data_tests:
                 - accepted_range:
                       arguments:
@@ -124,50 +158,68 @@ models:
                           max_value: 100
           - name: track_duration_min
             data_type: float
-            description: "Track duration in minutes (may be fractional)."
+            description:
+                >
+                Track duration in minutes (may be fractional).
             data_tests:
                 - accepted_range:
                       arguments:
                           min_value: 0
           - name: explicit
             data_type: boolean
-            description: "Whether the track is marked as explicit in Spotify."
+            description:
+                >
+                Whether the track is marked as explicit in Spotify.
             data_tests:
                 - dbt_utils.expression_is_true:
                       arguments:
-                          expression: "explicit in (true, false)"
+                          expression: 'explicit in (true, false)'
     - name: dim_genre
       config:
           contract:
               enforced: true
-      description: "Genre dimension (one row per genre) generated from exploded artist genres."
+      description:
+          >
+          Genre dimension (one row per genre) generated from exploded artist genres.
       columns:
           - name: genre_sk
             data_type: text
-            description: "Surrogate key for the genre value."
+            description:
+                >
+                Surrogate key for the genre value.
             data_tests:
                 - unique
                 - not_null
           - name: genre
             data_type: text
-            description: "Single genre value from Spotify metadata (artists can have multiple genres)."
+            description:
+                >
+                Single genre value from Spotify metadata (artists can have multiple genres).
     - name: dim_artist_genre
       config:
           contract:
               enforced: true
-      description: "Artist-genre dimension/relationship table linking artists to individual genre values."
+      description:
+          >
+          Artist-genre dimension/relationship table linking artists to individual genre values.
       columns:
           - name: artist_genre_sk
             data_type: text
-            description: "Surrogate key for the artist genre value."
+            description:
+                >
+                Surrogate key for the artist genre value.
             data_tests:
                 - unique
                 - not_null
           - name: artist_name
             data_type: text
-            description: "Artist name as displayed in Spotify."
+            description:
+                >
+                Artist name as displayed in Spotify.
             data_tests:
                 - not_null
           - name: genre
             data_type: text
-            description: "Single genre value."
+            description:
+                >
+                Single genre value.
