@@ -11,8 +11,8 @@ WITH src AS (
 
 SELECT DISTINCT 
     artist_genre_sk,
-    trim(artist_name) as artist_name,
-    trim(g) AS genre
+    {{ normalize_str('artist_name') }} AS artist_name,
+    {{ normalize_str('g') }} AS genre
 FROM 
     src
 CROSS JOIN 
