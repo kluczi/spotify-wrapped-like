@@ -1,5 +1,5 @@
 SELECT
-  {{ dbt_utils.generate_surrogate_key(['genre']) }} AS genre_sk,
+  {{ generate_dim_sk(['genre']) }} AS genre_sk,
   genre
 FROM (
   SELECT DISTINCT genre

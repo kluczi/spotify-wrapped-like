@@ -1,6 +1,6 @@
 WITH src AS (
     SELECT 
-        {{ dbt_utils.generate_surrogate_key(['album_id']) }} AS album_sk,
+        {{ generate_dim_sk(['album_id']) }} AS album_sk,
         album_id,
         album_name,
         album_release_date,

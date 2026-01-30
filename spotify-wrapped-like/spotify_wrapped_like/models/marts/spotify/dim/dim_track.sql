@@ -1,6 +1,6 @@
 WITH src AS (
     SELECT 
-        {{ dbt_utils.generate_surrogate_key(['track_id']) }} AS track_sk,
+        {{ generate_dim_sk(['track_id']) }} AS track_sk,
         track_id,
         track_name,
         track_number,

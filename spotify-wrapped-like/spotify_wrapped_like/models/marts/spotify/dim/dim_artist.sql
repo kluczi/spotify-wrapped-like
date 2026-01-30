@@ -1,6 +1,6 @@
 WITH src AS (
     SELECT 
-        {{ dbt_utils.generate_surrogate_key(['artist_name']) }} AS artist_sk,
+        {{ generate_dim_sk(['artist_name']) }} AS artist_sk,
         artist_name,
         artist_followers,
         artist_popularity
