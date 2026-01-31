@@ -1,0 +1,10 @@
+version: 2
+
+macros:
+    - name: generate_dim_sk
+      description:
+          >
+          Generating surrogate key for the dimension.
+      arguments:
+          - name: column_name
+            description: Name of the column.
