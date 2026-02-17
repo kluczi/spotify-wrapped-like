@@ -122,6 +122,16 @@ models:
             data_tests:
                 - unique
                 - not_null
+          - name: album_sk
+            data_type: text
+            description:
+                >
+                Foreign key surrogate for the album dimension.
+          - name: artist_sk
+            data_type: text
+            description:
+                >
+                Foreign key surrogate for the artist dimension.
           - name: track_id
             data_type: text
             description:
@@ -211,6 +221,16 @@ models:
             data_tests:
                 - unique
                 - not_null
+          - name: artist_sk
+            data_type: text
+            description:
+                >
+                Foreign key surrogate for the artist dimension.
+          - name: genre_sk
+            data_type: text
+            description:
+                >
+                Foreign key surrogate for the genre dimension.
           - name: artist_name
             data_type: text
             description:
