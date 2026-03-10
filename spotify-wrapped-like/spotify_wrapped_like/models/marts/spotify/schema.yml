@@ -243,3 +243,63 @@ models:
             description:
                 >
                 Single genre value.
+
+    - name: bridge_artist_genre
+      description:
+          >
+          Bridge table linking artist and genre surrogate keys for many-to-many relationships.
+
+    - name: rpt_quality__catalog_overview
+      description:
+          >
+          Quality overview report summarizing catalog counts and basic data health metrics.
+
+    - name: rpt_quality__album_track_consistency
+      description:
+          >
+          Quality report comparing declared album track counts to actual track records.
+
+    - name: rpt_catalog__newest_albums
+      description:
+          >
+          Catalog report listing the newest albums in the dataset.
+
+    - name: rpt_catalog__genre_overview
+      description:
+          >
+          Catalog report showing artist and track counts per genre.
+
+    - name: rpt_catalog__top_artists_by_followers
+      description:
+          >
+          Catalog report listing top artists ranked by followers.
+
+    - name: rpt_catalog__top_tracks_total
+      description:
+          >
+          Catalog report listing top tracks across the entire catalog.
+
+    - name: rpt_catalog__top_tracks_by_genre
+      description:
+          >
+          Catalog report listing top tracks within each genre.
+
+    - name: rpt_catalog__artists_with_most_genres
+      description:
+          >
+          Catalog report listing artists associated with the most distinct genres.
+
+    - name: rpt_catalog__top_albums_by_avg_track_popularity
+      description:
+          >
+          Catalog report ranking albums by average track popularity.
+
+    - name: rpt_strategy__emerging_artists
+      description:
+          >
+          Strategy report focusing on high-popularity artists with relatively few followers.
+
+    - name: rpt_strategy__hidden_gems
+      description:
+          >
+          Strategy report highlighting popular tracks from less popular artists.

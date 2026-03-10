@@ -1,0 +1,12 @@
+version: 2
+
+models:
+    - name: rpt_quality__catalog_overview
+      config:
+          contract:
+              enforced: true
+      description:
+          >
+          Quality catalog overview
+      columns:
+          - name:

@@ -1,0 +1,66 @@
+version: 2
+
+models:
+    - name: agg_artist_metrics
+      #   config:
+      #       contract:
+      #           enforced: true
+      description:
+          >
+          Artist grain
+      columns:
+          - name: artist_name
+            data_type: text
+            description:
+                >
+                Artist name displayed as in Spotify
+
+            data_tests:
+                - not_null
+                - unique
+          - name: artist_followers
+            data_type: int
+            description:
+                >
+                Number of artist followers
+            data_tests:
+                - not_null
+          - name: genres_count
+            data_type: int
+            description:
+                >
+                Number of artist genres
+            data_tests:
+                - not_null
+          - name: albums_count
+            data_type: int
+            description:
+                >
+                Number of artist album
+            data_tests:
+                - not_null
+          - name: tracks_count
+            data_type: int
+            description:
+                >
+                Number of artist tracks
+          - name: avg_track_popularity
+            data_type: float
+            description:
+                >
+                Average popularity of artist track (scale 0-100)
+            data_tests:
+                - accepted_range:
+                      arguments:
+                          min_value: 0
+                          max_value: 100
+          - name: max_track_popularity
+            data_type: int
+            description:
+                >
+                The best artist track based on popularity (scale 0-100)
+            data_tests:
+                - accepted_range:
+                      arguments:
+                          min_value: 0
+                          max_value: 100

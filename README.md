@@ -41,16 +41,26 @@ spotify-wrapped-like/
     │   ├── intermediate/       # Intermediate transformations (views)
     │   │   └── spotify/
     │   │       └── int_artist_genre_exploded.sql
-    │   └── marts/              # Marts layer (tables)
+    │   └── marts/              # Marts layer (tables and reports)
     │       └── spotify/
     │           ├── dim/        # Dimension tables
     │           │   ├── dim_album.sql
     │           │   ├── dim_artist.sql
     │           │   ├── dim_track.sql
     │           │   ├── dim_genre.sql
-    │           │   └── dim_artists_genre.sql
-    │           ├── fct/        # Fact tables
-    │           │   └── fct_spotify_popularity.sql
+    │           │   └── dim_artist_genre.sql
+    │           ├── reports/    # Report models (analytics-ready views)
+    │           │   ├── rpt_quality__catalog_overview.sql
+    │           │   ├── rpt_quality__album_track_consistency.sql
+    │           │   ├── rpt_catalog__newest_albums.sql
+    │           │   ├── rpt_catalog__genre_overview.sql
+    │           │   ├── rpt_catalog__top_artists_by_followers.sql
+    │           │   ├── rpt_catalog__top_tracks_total.sql
+    │           │   ├── rpt_catalog__top_tracks_by_genre.sql
+    │           │   ├── rpt_catalog__artists_with_most_genres.sql
+    │           │   ├── rpt_catalog__top_albums_by_avg_track_popularity.sql
+    │           │   ├── rpt_strategy__emerging_artists.sql
+    │           │   └── rpt_strategy__hidden_gems.sql
     │           ├── bridge_artist_genre.sql
     │           └── schema.yml
     └── seeds/                  # Raw data files
